@@ -4,27 +4,27 @@
 	<!-- Basic -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Voterr</title>
+	<title>onmyballot</title>
 	<meta name="viewport" content="width=device-width" />
-	<meta name="description" content="">
-	<meta name="author" content="">
+	<meta name="description" content="Find out who’s on your Ballot and where to vote!">
+	<meta name="author" content="Emmad Mazhari">
 	
 	<!-- CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,600" rel="stylesheet">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/app.css">
 
-  	<!-- Favicon
+  	<!-- Favicon-->
   	<link rel="icon" 
       type="image/png" 
-      href="images/wave.png" />-->
+      href="logo.png" />
 
-    <!-- Twitter Share
+    <!-- Twitter Share-->
     <meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@mazhxri" />
-	<meta name="twitter:title" content="Emmad Mazhari" />
-	<meta name="twitter:description" content="Pushing pixels, mixtapes, & game theory." />
-	<meta name="twitter:image" content="http://mazhari.me/images/wave.png" />-->
+	<meta name="twitter:title" content="Find out who’s on your Ballot and where to vote!" />
+	<meta name="twitter:description" content="Lookup candidates ahead of time and email yourself your choices to use on election day 🙌🏽" />
+	<meta name="twitter:image" content="https://onmyballot.co/logo.png" />
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -36,10 +36,19 @@
 </head>
 <body>
 	<div id="container">
-		<h3 class="title">onmyballot</h1>
+		<div class="logo" onclick="redo()">
+			<img class="wave" src="logo.png" alt="hi!" display="inline-block">
+			<h4 class="title">onmyballot</h4>
+			<a href="https://twitter.com/home?status=Get%20your%202016%20U.S.%20Election%20ballot%20on%20http%3A//onmyballot.co/!" target="blank">
+				<div id="twitter"></div>
+			</a>
+		</div>
 
 		<div id="initial">
 			<h1 class="call">Find out who’s on your Ballot and where to vote!</h1>
+			<h5 class="subtitle_main_page">
+				Lookup candidates ahead of time and email yourself your choices to use on election day 🙌🏽
+			</h5>
 			
 			<div id="locationField">
 		      	<input id="autocomplete" placeholder="Enter your address"
@@ -49,40 +58,38 @@
 		</div>
 
 		<div id="post">
-			<div id="map_card">
-				<div id="map_info">
-					<h3 class="card_title">Polling Location</h3>
-				</div>
-				<div id="map"></div>
-			</div>
-
 			<div id="results"></div> 
 			<div id="offices">
-				<div id="header"></div>
-				<h3 class="ballot_title">Candidates</h3>
+				<div id="header">
+					<h3 class="main_ballot_title">Your Ballot <img class="emojiheader" draggable="false" alt="🔑" src="http://emojipedia-us.s3.amazonaws.com/cache/cf/6a/cf6a1ba6ce4d22dd597ab3503a2ce344.png"></h3>
+				</div>
+				<div id="map_card">
+					<div id="map_info">
+						<p class="map_subtext">Polling Location</p>
+					</div>
+					<div id="map"></div>
+				</div>
+				<div id="error"></div>
+				<h3 class="ballot_title">Candidates <img class="emojiheader" draggable="false" alt="✍🏽" src="https://twemoji.maxcdn.com/2/72x72/270d-1f3fd.png"></h3>
 			</div>
 
 			<div id="send_info">
-				<h2 class="send_info_title">
-					Send yourself your ballot choices!
-				</h2>
-				<p class="send_info_subtitle">Send your ballot choices to your phone to use in the polling booth on election day - either by phone or email!</p>
-				<div id="text">
-					<input id="text_input" placeholder="Phone Number"
-			            type="text"></input>
-					<button type="submit" onclick="text()">Text me!</button>
-				</div>
+				<h4 class="send_info_title">
+					Send yourself your ballot choices! <img class="emoji" draggable="false" alt="✉" src="http://twemoji.maxcdn.com/36x36/2709.png ">
+				</h4>
+				<p class="send_info_subtitle">Send your ballot choices to your phone to use in the polling booth on election day!</p>
 				<div id="email">
 					<input id="email_input" placeholder="Email"
 				            type="text"></input>
-					<button type="submit" onclick="email()">Email me!</button>
+					<button type="submit" class="emailSubmit" onclick="sendEmail()">Email me!</button>
+					<div id="email_error_space"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!--<div id="footer">
-		<p><strong>Made with <img class="emoji" draggable="false" alt="❤️" src="http://twemoji.maxcdn.com/16x16/2764.png"> by @mazhxri</strong></p>
-	</div>-->
+	<div id="footer">
+		<p><strong>Made with <img draggable="false" alt="❤️" src="http://twemoji.maxcdn.com/16x16/2764.png"> by <a href="https://twitter.com/mazhxri" target="blank" class="footer_link">@mazhxri</a></strong></p>
+	</div>
 </body>
 </html>

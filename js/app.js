@@ -1,5 +1,4 @@
 var apikey = "AIzaSyBkrGN2L98raRnCcvFjW5JE4VLpjKu8A6c";
-var mandrillAPI = "0bwIWB-y1FeIdqPEjqEbXQ";
 
 /**
 * Build and execute request to look up voter info for provided address.
@@ -23,14 +22,14 @@ function lookup(address, callback) {
 * @param {Object} rawResponse Raw response from the API.
 */
 function renderResults(response, rawResponse) {
-	sendEmail();
+	//sendEmail();
 	var el = document.getElementById('results');
+	$('#results').empty();
 	if (!response || response.error) {
 	  	el.appendChild(document.createTextNode(
-	    	'Error while trying to fetch polling place'));
+	    	"We had trouble finding your address 😞. Make sure it's in the US and is a correct address"));
 		return;
 	}
-	
 	console.log(response);
 	var initial_block = document.getElementById("initial");
 	initial_block.style.display = 'none';      
@@ -51,31 +50,10 @@ function renderResults(response, rawResponse) {
 		var map_card = document.getElementById("map_card");
 		map_card.style.display = 'block';   
 		var map_info = document.getElementById('map_info');
-	  	
-	  	//your address
-	  	var your_address = document.createElement('p');
-	  	your_address.className = "map_subtext_top";
-	  	var a = document.createElement('a');
-	  	var linkText = document.createTextNode("(Change)");
-		a.appendChild(linkText);
-		a.href = "#";
-		a.onclick = "redo();";
-	  	your_address.appendChild(document.createTextNode('Your Address '));
-	  	your_address.appendChild(a);
-	  	map_info.appendChild(your_address);
-
-	  	var your_address_actual1 = document.createElement('p');
-	  	your_address_actual1.appendChild(document.createTextNode(response.normalizedInput.line1));
-	  	var your_address_actual2 = document.createElement('p');
-	  	your_address_actual2.appendChild(document.createTextNode(response.normalizedInput.city + ", " + response.normalizedInput.state + " " + response.normalizedInput.zip));
-	  	map_info.appendChild(your_address_actual1);
-	  	map_info.appendChild(your_address_actual2);
 
 	  	//polling place
-	  	var polling_address = document.createElement('p');
-	  	polling_address.className = "map_subtext";
-	  	polling_address.appendChild(document.createTextNode('Polling Place'));
-	  	map_info.appendChild(polling_address);
+	  	var polling_address = document.createElement('h3');
+	  	polling_address.className = "ballot_title";
 
 	  	var polling_address_actual1 = document.createElement('p');
 	  	polling_address_actual1.appendChild(document.createTextNode(pollingLocation.locationName));
@@ -94,8 +72,12 @@ function renderResults(response, rawResponse) {
 	  	map_info.appendChild(polling_address_actual4);
 
 	} else {
-	  	el.appendChild(document.createTextNode(
-	    	'Could not find polling place for ' + normalizedAddress));
+		var error = document.getElementById('error');
+		var error_message = document.createElement('div');
+		error_message.className = "error_message";
+	  	error_message.appendChild(document.createTextNode(
+	  		"We couldn't find your polling place. Sorry 😖"));
+	  	error.appendChild(error_message);
 	}
 
 	//contests
@@ -103,17 +85,21 @@ function renderResults(response, rawResponse) {
 }
 
 function redo() {
-	console.log("hello");
-	var initial = document.getElementById('initial');
+	/*var initial = document.getElementById('initial');
 	var post = document.getElementById('post');
+	var autocomplete = document.getElementById("autocomplete");
+	autocomplete.value = '';
 	post.style.display = 'none';
-	initial.style.display = 'block';
+	initial.style.display = 'block';)*/
+	location.reload();
 }
 
 function contest_render(rep_array, address) {
 	var offices = document.getElementById('offices');
 	var send_info = document.getElementById('send_info');
 	var header = document.getElementById('header');
+	var twitter = document.getElementById('twitter');
+	twitter.style.display = 'inline-block';  
 	offices.style.display = 'block';    
 	send_info.style.display = 'block';
 	//your address
@@ -124,8 +110,7 @@ function contest_render(rep_array, address) {
   	var a = document.createElement('a');
   	var linkText = document.createTextNode("(Change)");
 	a.appendChild(linkText);
-	a.href = "#";
-	a.onclick = "redo();";
+	a.onclick = redo;
   	your_address.appendChild(document.createTextNode('Your Address '));
   	your_address.appendChild(a);
   	address_block.appendChild(your_address);
@@ -162,6 +147,42 @@ function contest_render(rep_array, address) {
 		  	normEl2.className = "running";
 		  	normEl2.appendChild(document.createTextNode(subtitle));
 		  	election.appendChild(normEl2);
+
+		  	var checkbox1 = document.createElement('input');
+	        checkbox1.type = "radio";
+	        checkbox1.name = rep_array[i].referendumText;
+	        checkbox1.value = "Yes";
+	        checkbox1.id = "id"+rep_array[i].referendumTitle+"yes";
+	        checkbox1.text = rep_array[i].referendumText;
+
+	        var checkbox2 = document.createElement('input');
+	        checkbox2.type = "radio";
+	        checkbox2.name = rep_array[i].referendumText;
+	        checkbox2.value = "No";
+	        checkbox2.id = "id"+rep_array[i].referendumTitle+"no";
+	        checkbox2.text = rep_array[i].referendumText;
+	        
+	        var label1 = document.createElement("label");
+	        label1.innerText = "Yes";
+    		label1.htmlFor = "id"+rep_array[i].referendumTitle+"yes";
+    		
+    		var label2 = document.createElement("label");
+	        label2.innerText = "No";
+    		label2.htmlFor = "id"+rep_array[i].referendumTitle+"no";
+	        
+	        var contest_card1 = document.createElement('div');
+		  	contest_card1.className = "contest_card";
+		  	var contest_card2 = document.createElement('div');
+		  	contest_card2.className = "contest_card";
+	        
+	        contest_card1.appendChild(checkbox1);
+	        contest_card1.appendChild(label1);
+
+	        contest_card2.appendChild(checkbox2);
+	        contest_card2.appendChild(label2);
+
+	        election.appendChild(contest_card1);
+	        election.appendChild(contest_card2);
 	  	}
 	  	else {
 	  		//print title
@@ -189,7 +210,7 @@ function contest_render(rep_array, address) {
 		  		if (name.length > 1) {
 		  			name = name[0] + " & " + name[1];
 		  		}
-		  		//contest_card.appendChild(normEl2);
+
 				//checkbox
 				var checkbox = document.createElement('input');
 		        if (numVoting > 1) {
@@ -291,26 +312,53 @@ function initMap(address) {
 }
 
 function sendEmail(){
+	var email = document.getElementById('email_input').value;
+	if (!email) {
+		var email = document.getElementById('email_error_space');
+		$('#email_error_space').empty();
+		var email_error = document.createElement('div');
+		email_error.className = "email_error";
+		email_error.appendChild(document.createTextNode(
+	    	"Looks like you forgot to enter an email 😬"));
+		email.appendChild(email_error);
+		return;
+	}
+	console.log($("input:checked"));
+	var innerHTML = "<p>Thanks so much for taking to the time to read up on your candidates! Here are your choices</p><br><br><p>";
+	$("input:checked").each(function(){
+		innerHTML += this.name + " - " + "<strong>" + this.defaultValue + "</strong>" + "<br><br>";
+	});
+	innerHTML += "</p><br><br>";
+	innerHTML += "We'd really appreciate it if you could also spread the word! You can <a target=\"_blank\" href=\"https://twitter.com/home?status=Get%20your%202016%20U.S.%20Election%20ballot%20on%20http%3A//onmyballot.co/!\">tweet</a> about this project or just tell your friends!<br><br>"
+	innerHTML += "Thanks again for being part of the democratic process!</p>";
+
 	$.ajax({
 	  type: "POST",
 	  url: "https://mandrillapp.com/api/1.0/messages/send.json",
 	  data: {
 	    'key': "0bwIWB-y1FeIdqPEjqEbXQ",
 	    'message': {
-	      'from_email': 'admin@onmyballot.co',
+	      'from_email': 'yourballot@onmyballot.co',
 	      'to': [
 	          {
-	            'email': 'm.emmad.mazhari@gmail.com',
-	            //'name': ,
+	            'email': email,
+	            'name': 'Conerned Citizen',
 	            'type': "to"
 	          },
 	        ],
 	      'autotext': "true",
-	      'subject': "Here's your ballot from onmyballot!",
-	      'html': '<p>YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!</p>'
+	      'subject': "Here's your Ballot from onmyballot.co!",
+	      'html': innerHTML
 	    }
 	  }
 	 }).done(function(response) {
 	   console.log(response); // if you're into that sorta thing
 	 });
+	var email = document.getElementById('email_error_space');
+	$('#email_error_space').empty();
+	var email_success = document.createElement('div');
+	email_success.className = "email_success";
+	email_success.appendChild(document.createTextNode(
+    	"Awesome! Your email should be on the way! 🚀"));
+	email.appendChild(email_success);
 }
