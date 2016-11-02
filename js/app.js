@@ -295,19 +295,19 @@ function sendEmail(){
 	  type: "POST",
 	  url: "https://mandrillapp.com/api/1.0/messages/send.json",
 	  data: {
-	    ‘key’: mandrillAPI,
-	    ‘message’: {
-	      ‘from_email’: 'admin@onmyballot.co',
-	      ‘to’: [
+	    'key': "0bwIWB-y1FeIdqPEjqEbXQ",
+	    'message': {
+	      'from_email': 'admin@onmyballot.co',
+	      'to': [
 	          {
-	            ‘email’: 'm.emmad.mazhari@gmail.com',
-	            ‘name’: ,
-	            ‘type’: "to"
+	            'email': 'm.emmad.mazhari@gmail.com',
+	            //'name': ,
+	            'type': "to"
 	          },
 	        ],
-	      ‘autotext’: "true",
-	      ‘subject’: "Here's your ballot from onmyballot!",
-	      ‘html’: '<p>YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!</p>'
+	      'autotext': "true",
+	      'subject': "Here's your ballot from onmyballot!",
+	      'html': '<p>YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!</p>'
 	    }
 	  }
 	 }).done(function(response) {
