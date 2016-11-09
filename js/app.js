@@ -313,7 +313,7 @@ function initMap(address) {
 
 function sendEmail(){
 	var email = document.getElementById('email_input').value;
-	if (!email) {
+	/*if (!email) {
 		var email = document.getElementById('email_error_space');
 		$('#email_error_space').empty();
 		var email_error = document.createElement('div');
@@ -353,12 +353,12 @@ function sendEmail(){
 	  }
 	 }).done(function(response) {
 	   console.log(response); // if you're into that sorta thing
-	 });
+	 });*/
 	var email = document.getElementById('email_error_space');
 	$('#email_error_space').empty();
 	var email_success = document.createElement('div');
 	email_success.className = "email_success";
 	email_success.appendChild(document.createTextNode(
-    	"Awesome! Your email should be on the way! 🚀"));
+    	"The 2016 election is over, but thanks for trying!"));
 	email.appendChild(email_success);
 }
