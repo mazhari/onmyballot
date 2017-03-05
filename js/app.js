@@ -27,7 +27,7 @@ function renderResults(response, rawResponse) {
 	$('#results').empty();
 	if (!response || response.error) {
 	  	el.appendChild(document.createTextNode(
-	    	"We had trouble finding your address 😞. Make sure it's in the US and is a correct address"));
+	    	"The election's over so we can't get that data 😞"));
 		return;
 	}
 	console.log(response);
